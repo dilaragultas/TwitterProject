@@ -1,5 +1,6 @@
 package com.example.twitter.twitter.controller;
 
+import com.example.twitter.twitter.dto.CommentRequest;
 import com.example.twitter.twitter.entity.Comment;
 import com.example.twitter.twitter.service.CommentService;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,13 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestParam Long userId,
-                                                 @RequestParam Long twitId,
-                                                 @RequestParam String content) {
-        return ResponseEntity.ok(commentService.createComment(userId, twitId, content));
+    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest request) {
+        Comment comment = commentService.createComment(
+                request.getUserId(),
+                request.getTwitId(),
+                request.getContent()
+        );
+        return ResponseEntity.ok(comment);
     }
 
     @PutMapping("/{id}")

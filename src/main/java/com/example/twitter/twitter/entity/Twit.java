@@ -25,7 +25,7 @@ public class Twit {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "twit_user_id", nullable = false)
     private User user;
 
     private LocalDateTime createdAt = LocalDateTime.now();

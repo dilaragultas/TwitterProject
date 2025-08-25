@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name="comment", schema="twitter")
 public class Comment {
 
     @Id

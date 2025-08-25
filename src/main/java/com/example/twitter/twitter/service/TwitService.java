@@ -14,45 +14,45 @@ public class TwitService {
     private final TwitRepository twitRepository;
     private final UserRepository userRepository;
 
-    public TwitService(TwitRepository tweetRepository, UserRepository userRepository) {
-        this.twitRepository = tweetRepository;
+    public TwitService(TwitRepository twitRepository, UserRepository userRepository) {
+        this.twitRepository = twitRepository;
         this.userRepository = userRepository;
     }
 
-    public Twit createTweet(Long userId, String content) {
+    public Twit createTwit(Long userId, String content) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Twit tweet = new Twit();
-        tweet.setContent(content);
-        tweet.setUser(user);
+        Twit twit = new Twit();
+        twit.setContent(content);
+        twit.setUser(user);
 
-        return twitRepository.save(tweet);
+        return twitRepository.save(twit);
     }
 
-    public List<Twit> getTweetsByUserId(Long userId) {
+    public List<Twit> getTwitsByUserId(Long userId) {
         return twitRepository.findByUserId(userId);
     }
 
-    public Twit getTweetById(Long id) {
+    public Twit getTwitById(Long id) {
         return twitRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tweet not found"));
     }
 
-    public Twit updateTweet(Long tweetId, Long userId, String newContent) {
-        Twit tweet = getTweetById(tweetId);
-        if (!tweet.getUser().getId().equals(userId)) {
+    public Twit updateTwit(Long twitId, Long userId, String newContent) {
+        Twit twit = getTwitById(twitId);
+        if (!twit.getUser().getId().equals(userId)) {
             throw new RuntimeException("You are not the owner of this tweet");
         }
-        tweet.setContent(newContent);
-        return twitRepository.save(tweet);
+        twit.setContent(newContent);
+        return twitRepository.save(twit);
     }
 
-    public void deleteTweet(Long tweetId, Long userId) {
-        Twit tweet = getTweetById(tweetId);
-        if (!tweet.getUser().getId().equals(userId)) {
+    public void deleteTwit(Long twitId, Long userId) {
+        Twit twit = getTwitById(twitId);
+        if (!twit.getUser().getId().equals(userId)) {
             throw new RuntimeException("You are not allowed to delete this tweet");
         }
-        twitRepository.delete(tweet);
+        twitRepository.delete(twit);
     }
 }
